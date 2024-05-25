@@ -1,14 +1,14 @@
 const mysql2 = require("mysql2");
- const fs = require("fs");
- const path = require("path");
+const fs = require("fs");
+const path = require("path");
+
+require("dotenv").config();
 
 const sslCert = fs.readFileSync(path.resolve(__dirname, "certificate.pem"));
 
-
-// use to connect backend code with the specefic database
 const dbconnection = mysql2.createPool({
   user: process.env.USER,
-  port: process.env.PORT,
+  port: process.env.DB_PORT,
   database: process.env.DATABASE,
   host: process.env.HOST,
   password: process.env.PASSWORD,
@@ -18,13 +18,4 @@ const dbconnection = mysql2.createPool({
   },
 });
 
-// dbconnection.execute("select 'test' ", (err, result) => {
-//   if (err) {
-//     console.log(err.message);
-//   } else {
-//     console.log(result);
-//   }
-// });
-module.exports= dbconnection.promise()
-
-
+module.exports = dbconnection.promise();
